@@ -1,2 +1,2 @@
 # TeXDas
-To personalize Latex class, styles etc.
+I will update the repository in due course.
