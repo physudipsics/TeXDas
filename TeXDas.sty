@@ -1,0 +1,90 @@
+% Author: Sudip Das
+% Email: physudipsics@proton.me
+% GitHub Repository: https://github.com/physudipsics/TeXDas
+%---------------------------------------------------------------------------------
+
+% Identification------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{TeXDas}[2024/04/16 Sudip Das]
+
+% Declaration---------------------------------
+\newcommand{\useGen}{0}
+\newcommand{\useAssgn}{0}
+% (These may be used as SWITCHES)
+\DeclareOption{general}{\renewcommand{\useGen}{1}}
+\DeclareOption{assignment}{\renewcommand{\useAssgn}{1}}
+
+\DeclareOption*{\PackageWarning{sdip}{Unknown '\CurrentOption'}}
+
+% To process the options --------------------- 
+\ProcessOptions\relax
+
+% ESSENTIAL PACKAGES--------------------------
+\RequirePackage{geometry}
+\RequirePackage{amsfonts}
+\RequirePackage{amsmath} % [fleqn]: LEFT ALIGNED EQUATION
+\RequirePackage{amssymb}
+\RequirePackage{esint}
+\RequirePackage{graphicx,float}
+\RequirePackage{enumitem}
+\RequirePackage{tabularray}
+\RequirePackage{xparse}
+\RequirePackage{xcolor}
+% UNCOMMENT IF ebgFONT HAS TO BE IMPLEMENTED----------------------------------- 
+% \RequirePackage{ebgaramond}
+\RequirePackage{silence}
+% Disable unwanted warnings--
+\WarningsOff*
+
+% GENERAL SETUPS------------------------------
+\ifnum\useGen=1
+    \geometry{letterpaper, top=27mm, bottom=27mm, left=25mm, right=25mm}
+\fi
+
+\ifnum\useAssgn=1
+    % SETUP COUNTERS FOR QUESTIONS e.g., Q1.2, Q1.3 etc.------------------------
+    \newcounter{chapter}
+    % \setcounter{chapter}{2}
+    \newcounter{exercise}
+    \renewcommand{\theexercise}{\arabic{chapter}.\arabic{exercise}}
+
+    % CREATE NEW ENVIRONMENT:---------------------------------------------------
+    \newenvironment{envexercise}{%\vspace{2ex plus0.5ex minus0.5ex}
+  	    \renewcommand{\labelenumi}{\alph{enumi})}
+  	}%
+
+    \newcommand{\exercise}{
+	    \vspace{1.5ex}
+	    \refstepcounter{exercise}%
+  	    \noindent\textbf{Q\theexercise:}
+    }
+
+    \NewDocumentCommand{\ans}{l}{
+	    \vspace{2.5ex}
+	    \noindent \textbf{Answer:}{#1}
+    }
+
+    % FEW COMMANDS--------------------------------------------------------------
+    % DEFINE \tab ----------------------------
+    \newcommand\tab[1][1cm]{\hspace*{#1}}
+
+    % DEFINE OPTIONS FOR MCQs---------------------------------------------------
+    \NewDocumentCommand{\opt}{mmmm}{
+	    \par
+	    \vspace{0ex}
+	    \noindent{#1}\hspace{3em}{#2}\hspace{3em}{#3}\hspace{3em}{#4}\hspace{3em}
+    }
+
+    % DESIGN PAGE HEADER--------------------------------------------------------
+    \NewDocumentCommand{\pghd}{mmmmm}{
+        % \usepackage{ebgaramond}
+	    \begin{center}
+		    \textsc{\Large{#1}}\\
+		    \textsc{#2}\\
+		    \textsc{#3}\\
+		    \textsc{#4}\\
+		    \textsc{#5}\\
+		    \hrulefill
+	    \end{center}
+    }   
+\fi
