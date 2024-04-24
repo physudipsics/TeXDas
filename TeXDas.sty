@@ -10,9 +10,11 @@
 % Declaration---------------------------------
 \newcommand{\useGen}{0}
 \newcommand{\useAssgn}{0}
+\newcommand{\useDecl}{0}
 % (These may be used as SWITCHES)
 \DeclareOption{general}{\renewcommand{\useGen}{1}}
 \DeclareOption{assignment}{\renewcommand{\useAssgn}{1}}
+\DeclareOption{declaration}{\renewcommand{\useDecl}{1}}
 
 \DeclareOption*{\PackageWarning{sdip}{Unknown '\CurrentOption'}}
 
@@ -88,3 +90,35 @@
 	    \end{center}
     }   
 \fi
+
+\ifnum\useDecl=1
+
+\RequirePackage{setspace}
+\NewDocumentCommand{\pghd}{}{
+    \vspace{7em}\noindent
+    \begin{center}
+        \textbf{\large{DECLARATION}}
+    \end{center}
+}
+
+\NewDocumentCommand{\body}{m}{
+\begin{spacing}{1.7}
+    \noindent {#1}
+ \end{spacing}
+}
+
+\NewDocumentCommand{\bttmpnl}{mmmm}{
+\begin{spacing}{1.6}
+   \vspace{7em}\noindent
+\begin{tabular}[t]{c}
+  \rule{10em}{0.4pt}\\{#1}
+\end{tabular}%
+\hfill
+\begin{tabular}[t]{c}
+  \rule{15em}{0.4pt}\\{#2}\\{#3}\\{#4}
+\end{tabular}%
+\hfill% 
+\end{spacing}
+
+}
+\fi 
